@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napkin AI 視覺化課程</title>
+    <!-- 載入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 確保字體清晰且為 Inter */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb; /* Light background */
+            /* 隱藏預設滾動條，實現單頁翻動效果 */
+            overflow: hidden; 
+        }
+        .slide {
+            height: 100vh;
+            width: 100vw;
+            display: none; /* 預設隱藏所有 slides */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            transition: background-color 0.5s;
+        }
+        .slide.active {
+            display: flex; /* 顯示當前 active slide */
+        }
+        .section-header {
+            color: #1e40af; /* Deep Blue */
+            font-weight: 800;
+        }
+        .prompt-code {
+            background-color: #e5e7eb;
+            color: #374151;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            white-space: pre-wrap;
+            text-align: left;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .link-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+        }
+        /* 突出顯示 (代替 ** 和 「」) */
+        .highlight {
+            font-weight: 700; /* Bold */
+            color: #1d4ed8; /* Blue-700 for LLM concepts */
+        }
+        .emphasize {
+            font-weight: 800; /* Extra Bold */
+            color: #9333ea; /* Violet-600 for key phrases */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: 封面頁 -->
+    <section id="slide-1" class="slide bg-white active">
+        <div class="max-w-4xl w-full">
+            <h1 class="text-6xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                📝 文獻視覺化魔法
+            </h1>
+            <h2 class="text-4xl font-light text-blue-600 mb-8">
+                — Napkin AI 實戰課程 —
+            </h2>
+            <p class="text-xl text-gray-500">
+                活用 AI 工具，將複雜文獻內容轉換為清晰圖表
+            </p>
+        </div>
+    </section>
+
+    <!-- Slide 2: 課程目標 -->
+    <section id="slide-2" class="slide bg-gray-50">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl">
+            <h2 class="text-4xl section-header mb-6">🎯 課程目標與工具</h2>
+            <div class="space-y-4 text-gray-700 text-xl">
+                <p><span class="text-blue-600 font-bold">主題：</span> 活用 AI，將研究文獻內容轉換為視覺化圖表。</p>
+                <p><span class="text-blue-600 font-bold">目標：</span> 學習 <span class="emphasize">結構化閱讀</span>、<span class="emphasize">AI 繪圖</span> 與 <span class="emphasize">人工校準</span> 的完整流程。</p>
+                <div class="mt-6 p-4 border border-gray-200 rounded-lg">
+                    <p class="text-2xl font-semibold text-gray-800 mb-2">使用工具：</p>
+                    <ul class="list-none space-y-2 pl-0">
+                        <li class="flex items-center"><span class="text-2xl mr-3">✨</span> <span class="emphasize">Napkin AI</span> (視覺化工具)</li>
+                        <li class="flex items-center"><span class="text-2xl mr-3">🧠</span> <span class="emphasize">Gemini / NotebookLM</span> (LLM 提煉工具)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: 階段一標題 -->
+    <section id="slide-3" class="slide bg-blue-500">
+        <h2 class="text-5xl font-extrabold text-white mb-4">💡 階段一：結構化提煉</h2>
+        <p class="text-2xl text-blue-200">利用大型語言模型 (LLM) 準備 Napkin 的最佳輸入</p>
+    </section>
+
+    <!-- Slide 4: 步驟 1-1 (文獻精選) -->
+    <section id="slide-4" class="slide bg-white">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="text-blue-500 text-4xl mr-3">1-1</span> 精選文獻內容
+            </h3>
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4 mt-1">▶️</span>
+                    <div>
+                        <p class="font-semibold text-xl text-gray-900">動作：開啟提供的文獻（影片）連結</p>
+                        <!-- 根據要求 1，列出所有 4 個連結並做出超連結 -->
+                        <ul class="text-gray-600 text-sm mt-1 space-y-1 pl-4">
+                            <li><a href="https://youtu.be/ts-palZz8FU?si=9ZBm5wQWXOVWQDpt" target="_blank" class="text-blue-500 hover:underline">連結1 生物</a></li>
+                            <li><a href="https://youtu.be/ZXwxFIf82kE?si=It9Q4EgV5Z_rmFBC" target="_blank" class="text-blue-500 hover:underline">連結2 物理</a></li>
+                            <li><a href="https://youtu.be/c-t0vMJFr20?si=9KiOYN5U0lkxl_Ng" target="_blank" class="text-blue-500 hover:underline">連結3 化學</a></li>
+                            <li><a href="https://youtu.be/2b4xau6WP34?si=s8YH_ezfEdlE_1yK" target="_blank" class="text-blue-500 hover:underline">連結4 地科</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-3xl mr-4 mt-1">🎯</span>
+                    <div>
+                        <p class="font-semibold text-xl text-gray-900">任務：選擇並複製 1-2 個段落 (約 60-150 字)</p>
+                        <p class="text-gray-600 mt-1">選取文章或影片腳本中 <span class="emphasize">結構性最強</span> 或 <span class="emphasize">資訊最密集</span> 的部分。</p>
+                    </div>
+                </div>
+                <div class="link-box p-3 mt-4 rounded-lg">
+                    <p class="font-bold text-blue-700">💡 提示：</p>
+                    <p class="text-sm text-blue-900">適合提煉的段落包括：步驟、比較、因果、概念定義。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: 步驟 1-2 (LLM 提煉核心) -->
+    <section id="slide-5" class="slide bg-gray-100">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-4 flex items-center">
+                <span class="text-blue-500 text-4xl mr-3">1-2</span> 利用 LLM 提煉核心 <span class="text-xl text-red-500 ml-3">(優化輸入的關鍵！)</span>
+            </h3>
+            <p class="text-gray-600 mb-4">目的：將散文形式轉換為 Napkin AI 容易識別的<span class="emphasize">條列式結構</span>。</p>
+
+            <div class="bg-blue-900 p-4 rounded-lg shadow-lg">
+                <p class="text-lg font-mono text-blue-200 mb-2">💻 Prompt 示範 (輸入範例)</p>
+                <pre class="prompt-code !bg-gray-900 !text-white border border-blue-600">
+請將以下文字，分析並提煉出：
+1. N 個主要步驟。用數字順序(1).(2).(3)...表示為佳。
+2. 每個步驟的關鍵詞與簡短說明。
+請以<span class="emphasize text-white">條列式</span>輸出，方便我用 AI 繪圖工具製作流程圖。
+[貼上文章段落內容]
+                </pre>
+            </div>
+            <div class="mt-4 p-3 bg-green-100 border border-green-400 rounded-lg">
+                <p class="font-bold text-green-700">✅ 產出結果：</p>
+                <p class="text-sm text-green-900">取得簡潔、層次分明的 <span class="highlight">條列式清單</span> 作為 Napkin 的輸入。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: 階段二標題 -->
+    <section id="slide-6" class="slide bg-blue-500">
+        <h2 class="text-5xl font-extrabold text-white mb-4">🎨 階段二：Napkin 快速轉換實作</h2>
+        <p class="text-2xl text-blue-200">Text-to-Visual：將結構化清單快速轉為視覺圖表</p>
+    </section>
+
+    <!-- Slide 7: 步驟 2-1 & 2-2 (轉換實作) -->
+    <section id="slide-7" class="slide bg-white">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="text-blue-500 text-4xl mr-3">2-1 & 2-2</span> 啟動轉換核心
+            </h3>
+            <div class="space-y-6">
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg shadow-sm">
+                    <span class="text-3xl mr-4 text-gray-600">➡️</span>
+                    <div>
+                        <p class="font-semibold text-xl text-gray-900">動作：進入與貼上內容</p>
+                        <p class="text-gray-600 mt-1">前往 Napkin 網站，登入後 <span class="highlight">將 LLM 產出的條列清單貼入編輯區</span>。</p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-blue-100 rounded-lg shadow-md">
+                    <span class="text-3xl mr-4 text-blue-600">⚡️</span>
+                    <div>
+                        <p class="font-semibold text-xl text-blue-900">啟動 AI 轉換！</p>
+                        <p class="text-blue-700 mt-1">點擊介面中的 <span class="emphasize">藍色閃電⚡️</span> 或 <span class="emphasize">AI 轉換</span> 按鈕。</p>
+                        <p class="text-xs text-blue-500 mt-1">（這是 Napkin 的 <span class="emphasize">文字轉視覺化</span> 核心功能）</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: 步驟 2-3 (選擇視覺格式) -->
+    <section id="slide-8" class="slide bg-gray-100">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="text-blue-500 text-4xl mr-3">2-3</span> 選擇最佳視覺格式 <span class="text-xl text-red-500 ml-3">(關鍵選擇)</span>
+            </h3>
+            <p class="text-gray-700 mb-4">根據你的內容屬性，選擇最合適的圖表類型：</p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="p-4 bg-purple-100 rounded-lg shadow-md">
+                    <p class="text-2xl font-bold text-purple-800">流程圖 (Flowchart)</p>
+                    <p class="text-sm text-purple-600 mt-1">✅ 適合：步驟、因果關係、決策路徑</p>
+                </div>
+                <div class="p-4 bg-green-100 rounded-lg shadow-md">
+                    <p class="text-2xl font-bold text-green-800">心智圖 (Mind Map)</p>
+                    <p class="text-sm text-green-600 mt-1">✅ 適合：概念分類、層級結構、理論架構</p>
+                </div>
+                <div class="p-4 bg-yellow-100 rounded-lg shadow-md">
+                    <p class="text-2xl font-bold text-yellow-800">時間軸 (Timeline)</p>
+                    <p class="text-sm text-yellow-600 mt-1">✅ 適合：歷史事件、發展順序、研究階段</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">操作：如果不滿意初稿，可以嘗試調整輸入文字或查看 Napkin 的其他模板建議。</p>
+        </div>
+    </section>
+
+    <!-- Slide 9: 階段三標題 -->
+    <section id="slide-9" class="slide bg-blue-500">
+        <h2 class="text-5xl font-extrabold text-white mb-4">✍️ 階段三：編輯與優化</h2>
+        <p class="text-2xl text-blue-200">人工校準與設計：確保圖表的準確性與簡潔性</p>
+    </section>
+
+    <!-- Slide 10: 步驟 3-1 & 3-2 (校對與設計) -->
+    <section id="slide-10" class="slide bg-white">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="text-blue-500 text-4xl mr-3">3-1 & 3-2</span> 內容校對與視覺調整
+            </h3>
+
+            <div class="space-y-6 md:grid md:grid-cols-2 md:gap-6 md:space-y-0">
+                <div class="p-5 bg-red-50 rounded-lg border-l-4 border-red-500 shadow-md">
+                    <p class="font-bold text-xl text-red-700 flex items-center mb-2"><span class="text-3xl mr-2">🔍</span> 內容校對 (準確性優先)</p>
+                    <ul class="list-disc ml-5 text-gray-700 text-sm space-y-1">
+                        <!-- 應用要求 3 -->
+                        <li><span class="highlight">對照原始文獻</span>，檢查所有文字節點是否精確。</li>
+                        <li>利用 <span class="highlight">可編輯性</span>，手動修正 AI 誤解或冗長的措辭。</li>
+                        <li><span class="highlight text-red-700">原則：AI 只是草稿，準確性由你負責</span>。</li>
+                    </ul>
+                </div>
+                <div class="p-5 bg-green-50 rounded-lg border-l-4 border-green-500 shadow-md">
+                    <p class="font-bold text-xl text-green-700 flex items-center mb-2"><span class="text-3xl mr-2">✨</span> 視覺調整 (簡潔性優先)</p>
+                    <ul class="list-disc ml-5 text-gray-700 text-sm space-y-1">
+                        <!-- 應用要求 3 -->
+                        <li>調整字體、顏色，確保<span class="highlight">高對比度</span>和<span class="highlight">易讀性</span>。</li>
+                        <li>手動拖曳節點，使佈局<span class="highlight">整齊</span>，連線<span class="highlight">不混亂</span>。</li>
+                        <li>保持學術報告所需的<span class="highlight">清晰簡潔</span>風格。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: 步驟 3-3 (最終檢查) -->
+    <section id="slide-11" class="slide bg-gray-100">
+        <div class="max-w-4xl w-full p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center justify-center">
+                <span class="text-blue-500 text-4xl mr-3">3-3</span> 最終檢查：換位思考
+            </h3>
+            <div class="p-6 bg-yellow-100 border border-yellow-400 rounded-lg text-center">
+                <p class="text-2xl font-semibold text-yellow-800 mb-3">想一想：</p>
+                <p class="text-3xl text-gray-900 font-extrabold leading-relaxed">
+                    如果其他人看到這張圖，他們能否<span class="highlight">一目瞭然</span>地理解文獻(影片)的核心概念或流程？
+                </p>
+            </div>
+            <p class="text-lg text-gray-500 mt-4">確認圖表上所有的文字都已修正，並且邏輯連線正確無誤。</p>
+        </div>
+    </section>
+
+    <!-- Slide 12: 階段四標題 -->
+    <section id="slide-12" class="slide bg-blue-500">
+        <h2 class="text-5xl font-extrabold text-white mb-4">💾 階段四：匯出與繳交</h2>
+        <p class="text-2xl text-blue-200">將成果轉化為標準檔案格式</p>
+    </section>
+
+    <!-- Slide 13: 步驟 4-1 & 4-2 (匯出與繳交) -->
+    <section id="slide-13" class="slide bg-white">
+        <div class="max-w-4xl w-full text-left p-8 bg-white rounded-xl shadow-2xl border-t-4 border-blue-500">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="text-blue-500 text-4xl mr-3">4-1 & 4-2</span> 檔案匯出與命名
+            </h3>
+            <div class="space-y-6">
+                <div class="p-4 bg-gray-50 rounded-lg shadow-sm flex items-start">
+                    <span class="text-3xl mr-4 text-gray-600">⬇️</span>
+                    <div>
+                        <p class="font-semibold text-xl text-gray-900">匯出檔案 (Export)</p>
+                        <p class="text-gray-600 mt-1">在 Napkin 介面右上角尋找 <span class="emphasize">Export (匯出)</span> 或 <span class="emphasize">Download (下載)</span> 按鈕。</p>
+                        <p class="text-sm text-blue-500 mt-1">基本功能：請選擇匯出為 <span class="highlight">PDF</span> 或 <span class="highlight">PNG 檔案</span>。</p>
+                        <p class="text-sm text-blue-500 mt-1">更多功能：請以 <span class="highlight">公開分享連結</span> 進行分享。</p>
+                    </div>
+                </div>
+                <div class="p-4 bg-red-50 rounded-lg shadow-md flex items-start">
+                    <span class="text-3xl mr-4 text-red-500">📝</span>
+                    <div>
+                        <p class="font-semibold text-xl text-red-700">繳交作業 (Naming Convention)</p>
+                        <p class="text-gray-600 mt-1">請將檔案命名為：</p>
+                        <code class="prompt-code mt-2 block">10906-阿凡達-生物.pdf/png</code>
+                        <p class="text-gray-600 mt-1">最後將檔案上傳或將複製的分享連結繳至指定作業區。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 14: 結語 -->
+    <section id="slide-14" class="slide bg-blue-900">
+        <div class="max-w-4xl w-full">
+            <h2 class="text-5xl font-extrabold text-white mb-6">🎉 結語：視覺化循環</h2>
+            <p class="text-2xl text-blue-200 mb-8">今天我們掌握了兩大 AI 輔助技能：</p>
+            <div class="flex justify-center space-x-4">
+                <span class="text-2xl font-bold text-white p-3 rounded-lg bg-blue-700">閱讀</span>
+                <span class="text-4xl text-blue-400">→</span>
+                <span class="text-2xl font-bold text-white p-3 rounded-lg bg-blue-700">結構化 (LLM)</span>
+                <span class="text-4xl text-blue-400">→</span>
+                <span class="text-2xl font-bold text-white p-3 rounded-lg bg-blue-700">快速視覺化 (Napkin)</span>
+                <span class="text-4xl text-blue-400">→</span>
+                <span class="text-2xl font-bold text-white p-3 rounded-lg bg-blue-700">人工校準</span>
+            </div>
+            <p class="text-xl text-blue-300 mt-10">恭喜你！將來在任何報告或筆記整理中，都可以應用這套高效方法。</p>
+        </div>
+    </section>
+    
+    <!-- 導航控制區塊 (替換為圖示按鈕) -->
+    <div id="controls" class="fixed bottom-0 left-0 right-0 bg-white bg-opacity-90 shadow-lg p-3 flex justify-center items-center space-x-4 z-10">
+        <!-- 上一頁按鈕 (箭頭) -->
+        <button id="prevBtn" class="p-3 bg-gray-300 text-gray-800 rounded-full font-bold hover:bg-gray-400 disabled:opacity-50 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        
+        <!-- 頁碼指示器 -->
+        <span id="slideIndicator" class="text-lg font-semibold text-gray-700 w-16 text-center">1 / 14</span>
+        
+        <!-- 下一頁按鈕 (箭頭) -->
+        <button id="nextBtn" class="p-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 disabled:opacity-50 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicator = document.getElementById('slideIndicator');
+
+        // 函數：顯示指定索引的投影片
+        function showSlide(index) {
+            // 確保索引在有效範圍內
+            if (index < 0 || index >= totalSlides) return;
+
+            // 隱藏所有投影片
+            slides.forEach((slide) => {
+                slide.classList.remove('active');
+            });
+
+            // 顯示當前投影片
+            slides[index].classList.add('active');
+            currentSlideIndex = index;
+
+            // 更新指示器
+            indicator.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+
+            // 更新按鈕狀態
+            prevBtn.disabled = currentSlideIndex === 0;
+            nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+        }
+
+        // 函數：跳到下一頁
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        // 函數：跳到上一頁
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        // 事件監聽器：按鈕
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // 事件監聽器：鍵盤 (左右箭頭)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // 初始化：第一次載入時顯示第一頁
+        window.onload = () => {
+             showSlide(0);
+        };
+    </script>
+</body>
+</html>
